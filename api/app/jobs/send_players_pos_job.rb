@@ -1,5 +1,5 @@
 class SendPlayersPosJob < ApplicationJob
-  queue_as :default
+  queue_as :high_priority
   @@performing = false
   @@thread
   def perform(*args)
