@@ -4,7 +4,7 @@ class SendPlayersPosJob < ApplicationJob
   @@thread
   def perform(*args)
     @@performing = true
-    redis = Redis.new(host: '127.0.0.1', port: 6379, db: 15)
+    redis = Redis.new(host: 'redis', port: 6379, db: 15)
     @@thread = Thread.new do
       while @@performing
         # mes = redis.mget(redis.keys('pl[0-9]*')).map { |pos| {id=>} }

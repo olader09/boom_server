@@ -28,7 +28,7 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
   private
 
   def init_redis
-    @redis = Redis.new(host: '127.0.0.1', port: 6379, db: 15)
+    @redis = Redis.new(host: 'redis', port: 6379, db: 15)
     @redis.set('player_positions', []) if @redis.get('player_positions').nil?
   end
 
