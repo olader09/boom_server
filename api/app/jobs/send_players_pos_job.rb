@@ -1,11 +1,11 @@
 class SendPlayersPosJob < ApplicationJob
   queue_as :high_priority
   # @@performing = false
-  # @@thread
+  @@thread
   def perform(*args)
     # @@performing = true
     redis = Redis.new(host: 'redis', port: 6379, db: 15)
-    # @@thread = Thread.new do
+    @@thread = Thread.new do
     #   while @@performing
         # mes = redis.mget(redis.keys('pl[0-9]*')).map { |pos| {id=>} }
         p keys = redis.keys('pl[0-9]*')
@@ -13,7 +13,7 @@ class SendPlayersPosJob < ApplicationJob
         SendPlayersPosJob.perform_later
         # sleep 0.1
     #   end
-    # end
+    end
   end
 
   # def self.perform?
