@@ -6,7 +6,7 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
     p 'subscribed to position sync channel'
     stream_from 'some'
     # curr_id = PlayersInfo.add_player
-    SendPlayersPosJob.perform_now  #unless SendPlayersPosJob.perform?
+    SendPlayersPosJob.perform_now  unless SendPlayersPosJob.perform?
   end
 
   # current_user.id
@@ -22,7 +22,7 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    #SendPlayersPosJob.stop_perfom
+    SendPlayersPosJob.stop_perfom
   end
 
   private

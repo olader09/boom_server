@@ -1,28 +1,27 @@
 class SendPlayersPosJob < ApplicationJob
   queue_as :default
-  # @@performing = false
-  # @@thread
+  @@performing = false
+  @@thread
   def perform(*args)
-    # @@performing = true
+    @@performing = true
     redis = Redis.new(host: 'redis', port: 6379, db: 15)
-    # @@thread = Thread.new do
-    #   while @@performing
+    @@thread = Thread.new do
+      while @@performing
         # mes = redis.mget(redis.keys('pl[0-9]*')).map { |pos| {id=>} }
-        p keys = redis.keys('pl[0-9]*')
+        keys = redis.keys('pl[0-9]*')
         ActionCable.server.broadcast 'some', keys.empty? ? [] : redis.mget(keys)
         sleep 0.1
-        SendPlayersPosJob.perform_now
-    #   end
-    # end
+      end
+    end
   end
 
-  # def self.perform?
-  #   @@performing
-  # end
+  def self.perform?
+    @@performing
+  end
 
-  # def self.stop_perfom
-  #   @@performing = false
-  #   @@thread.kill
-  # end
+  def self.stop_perfom
+    @@performing = false
+    @@thread.kill
+  end
 
 end
