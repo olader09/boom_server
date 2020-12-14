@@ -13,7 +13,7 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
   def recieve(data)
     # p "data : "
     p data
-    value = ActiveSupport::JSON.encode ({id: current_user.id, position:  data['position']})
+    value = {id: current_user.id, position:  data['position']}.to_json
     @redis.set("pl#{current_user.id}", value )
     # ActionCable.server.broadcast 'some', id: current_user.id, name: current_user.name
     # g = ActiveSupport::JSON.decode(data)
