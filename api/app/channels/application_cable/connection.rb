@@ -17,5 +17,9 @@ module ApplicationCable
         reject_unauthorized_connection
       end
     end
+
+    def beat
+      transmit type: ActionCable::INTERNAL[:message_types][:ping], message: DateTime.current.strftime('%Q')
+    end
   end
 end
