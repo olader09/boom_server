@@ -1,5 +1,5 @@
 class SendPlayersPosJob < ApplicationJob
-  queue_as :high_priority
+  queue_as :default
   @@performing = false
   @@thread
   def perform(*args)
@@ -8,7 +8,7 @@ class SendPlayersPosJob < ApplicationJob
     @@thread = Thread.new do
       while @@performing
         # mes = redis.mget(redis.keys('pl[0-9]*')).map { |pos| {id=>} }
-        p keys = redis.keys('pl[0-9]*')
+        keys = redis.keys('pl[0-9]*')
         ActionCable.server.broadcast 'some', keys.empty? ? [] : redis.mget(keys)
         sleep 0.1
       end
