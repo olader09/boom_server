@@ -11,7 +11,7 @@ class SendPlayersPosJob < ApplicationJob
         p keys = redis.keys('pl[0-9]*')
         ActionCable.server.broadcast 'some', keys.empty? ? [] : redis.mget(keys)
         sleep 0.1
-        SendPlayersPosJob.perform_later
+        SendPlayersPosJob.perform_now
     #   end
     # end
   end
